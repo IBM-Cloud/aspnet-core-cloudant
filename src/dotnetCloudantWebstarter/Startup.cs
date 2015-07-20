@@ -1,33 +1,37 @@
 ﻿using Microsoft.AspNet.Builder;
+using Microsoft.AspNet.Hosting;
 using Microsoft.Framework.DependencyInjection;
-using Microsoft.AspNet.StaticFiles;
+using Microsoft.Framework.Logging;
+using Microsoft.Framework.Configuration;
+using Microsoft.Framework.Runtime;
 using CloudantDotNet;
 
 public class Startup
 {
+	public IConfiguration Configuration { get; set; }
+
+	public Startup(IHostingEnvironment env, IApplicationEnvironment appEnv)
+	{
+		var configBuilder = new ConfigurationBuilder(appEnv.ApplicationBasePath)
+			.AddJsonFile("config.json")
+			.AddEnvironmentVariables();
+		Configuration = configBuilder.Build();
+	}
+
 	public void ConfigureServices(IServiceCollection services)
 	{
 		services.AddMvc();
 	}
 
-    public void Configure(IApplicationBuilder app)
+    public void Configure(IApplicationBuilder app, ILoggerFactory loggerFactory)
     {
-        System.Net.ServicePointManager.ServerCertificateValidationCallback += (s, ce, ca, p) => true;
+        loggerFactory.AddConsole();
 
-        DbConnection db = new DbConnection();
-        db.ConfigureDB();
+		app.UseErrorPage();
 
-        app.UseFileServer(new FileServerOptions()
-        {
-            EnableDirectoryBrowsing = false,
-        });
+		app.UseStaticFiles();		
 
-        app.UseMvc(routes =>
-        {
-            routes.MapRoute(
-                name: "Default",
-                template: "{controller=Home}/{action=Index}");
-        });
+		app.UseMvcWithDefaultRoute();        
     }
 
 }
