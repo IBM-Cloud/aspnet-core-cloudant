@@ -45,9 +45,10 @@ namespace CloudantDotNet.Controllers
 					response = await client.PutAsync(dbName, body);
 					if (response.IsSuccessStatusCode)
 					{
-						await Create(JsonConvert.DeserializeObject<ToDoItem>("{ 'text': 'Sample 1' }"));
-						await Create(JsonConvert.DeserializeObject<ToDoItem>("{ 'text': 'Sample 2' }"));
-						await Create(JsonConvert.DeserializeObject<ToDoItem>("{ 'text': 'Sample 3' }"));
+						Task t1 = Create(JsonConvert.DeserializeObject<ToDoItem>("{ 'text': 'Sample 1' }"));
+						Task t2 = Create(JsonConvert.DeserializeObject<ToDoItem>("{ 'text': 'Sample 2' }"));
+						Task t3 = Create(JsonConvert.DeserializeObject<ToDoItem>("{ 'text': 'Sample 3' }"));
+						await Task.WhenAll(t1, t2, t3);
 					}
 					else
 					{
