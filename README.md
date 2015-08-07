@@ -1,6 +1,6 @@
-# asp.net5-cloudant
+# ASP .NET 5 Cloudant Sample
 
-Sample application for the Bluemix ASP.NET 5 buildpack. Depends on the Cloudant NoSQL DB service.
+This application demonstrates how to use the Cloudant NoSQL DB Service in an ASP.NET 5 application.
 
 [![Deploy to Bluemix](https://bluemix.net/deploy/button.png)](https://bluemix.net/deploy)
 
