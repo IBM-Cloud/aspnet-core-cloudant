@@ -10,7 +10,7 @@
 </head>
 <body>
     <div class="leftHalf">
-        <img class="newappIcon" src="images/newapp-icon.png" />
+        <img class="newappIcon" src="~/images/newapp-icon.png" />
         <h1>
             Welcome to the <span class="blue">.NET Cloudant Web Starter</span> on Bluemix!
         </h1>
@@ -23,52 +23,18 @@
                     .NET Cloudant Web Starter
                 </div>
             </header>
-            <section id='dbserviceinfo' style='display: none;'>
-                <table class="todolist">
-                    <tbody>
-                        <tr>
-                            <td class='fieldname'>Service Name</td>
-                            <td id='envServiceName'></td>
-                        </tr>
-                        <tr>
-                            <td class='fieldname'>DB Name</td>
-                            <td id='envDbName'></td>
-                        </tr>
-                        <tr>
-                            <td class='fieldname'>Host</td>
-                            <td id='envHost'></td>
-                        </tr>
-                        <tr>
-                            <td class='fieldname'>Port</td>
-                            <td id='envPort'></td>
-                        </tr>
-                        <tr>
-                            <td class='fieldname'>User Name</td>
-                            <td id='envUser'>*****</td>
-                        </tr>
-                        <tr>
-                            <td class='fieldname'>Password</td>
-                            <td id='envPassword'>*****</td>
-                        </tr>
-                        <tr>
-                            <td class='fieldname'>URL</td>
-                            <td id='envUrl'></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </section>
             <table id='notes' class='records'><tbody></tbody></table>
             <div id="loading">&nbsp;&nbsp;Please wait while the database is being initialized ...</div>
             <footer>
                 <div class='tips'>
                     Click the Add button to add a record.
                     <button class='addBtn' onclick="addItem()" title='add record'>
-                        <img src='images/add.png' alt='add' />
+                        <img src='~/images/add.png' alt='add' />
                     </button>
                 </div>
             </footer>
-            <script type="text/javascript" src="~/javascripts/util.js"></script>
-            <script type="text/javascript" src="~/javascripts/index.js"></script>
+            <script type="text/javascript" src="~/scripts/util.js"></script>
+            <script type="text/javascript" src="~/scripts/index.js"></script>
 
         </div>
     </div>
