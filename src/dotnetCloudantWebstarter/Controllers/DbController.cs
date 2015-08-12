@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Threading.Tasks;
+using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Text;
+using System.IO;
 using Microsoft.AspNet.Mvc;
-using MyCouch.Requests;
-using MyCouch.Responses;
+using Newtonsoft.Json;
 using dotnetCloudantWebstarter.Models;
 
 namespace CloudantDotNet.Controllers
@@ -10,125 +13,135 @@ namespace CloudantDotNet.Controllers
     [Route("api/[controller]")]
     public class DbController : Controller
     {
-        // POST: /api/db
+		private static readonly string dbName = "todos";
+
         [HttpPost]
         public async Task<dynamic> Create(ToDoItem item)
         {
-            try
-            {
-                //Reference the Cloudant db.
-                var myCouch = new DbConnection();
-                var client = myCouch.GetClient();
-
-                // Post/Insert to Cloudant using myCouch
-                var response = await client.Documents.PostAsync("{\"text\":\"" + item.text + "\"}");
-                if (response.IsSuccess)
-                {
-                    return "{\"id\":\"" + response.Id + "\",\"rev\":\"" + response.Rev + "\",\"text\":\"" + item.text + "\"}";
-                }
-                else
-                {
-                    return "{\"msg\": \"Failure to POST. Status Code: " + response.StatusCode + ". Reason: " + response.Reason + "\"}";
-                }
-
-            }
-            catch (Exception e)
-            {
-                return "{\"msg\": \"Failure to POST: " + e + "\"}";
-            }
+            using (var client = cloudantClient())
+			{
+				var response = await client.PostAsJsonAsync(dbName, item);
+				if (response.IsSuccessStatusCode)
+				{
+					var responseJson = await response.Content.ReadAsAsync<ToDoItem>();
+					return JsonConvert.SerializeObject(new { id = responseJson.id, rev = responseJson.rev });
+				}
+				string msg = "Failure to POST. Status Code: " + response.StatusCode + ". Reason: " + response.ReasonPhrase;
+				Console.WriteLine(msg);
+				return JsonConvert.SerializeObject(new { msg = "Failure to POST. Status Code: " + response.StatusCode + ". Reason: " + response.ReasonPhrase });
+			}
         }
 
-        // GET: /api/db
         [HttpGet]
         public async Task<dynamic> GetAll()
         {
-            try
-            {
-                var dbRef = new DbConnection();
-                var client = dbRef.GetClient();
-                //Create the DB if it does not exist.
-                if (client.Database.GetAsync().Result.Error == "not_found")
-                {
-                    await dbRef.CreateDB();
-                    //load with initial data
-                    await client.Documents.PostAsync("{\"text\":\"Sample 1\"}");
-                    await client.Documents.PostAsync("{\"text\":\"Sample 2\"}");
-                    await client.Documents.PostAsync("{\"text\":\"Sample 3\"}");
-                }
-                //Query for all docs including full content of the docs.
-                var query = new QueryViewRequest("_all_docs").Configure(query1 => query1.IncludeDocs(true));
-
-                //GET
-                RawResponse response = await client.Views.QueryRawAsync(query);
-                if (response.IsSuccess)
-                {
-                    return response.Content;
-                }
-                else
-                {
-                    return "{\"msg\": \"Failure to GET. Status Code: " + response.StatusCode + ". Reason: " + response.Reason + "\"}";
-                }
-            }
-            catch (Exception e)
-            {
-                return "{\"msg\": \"Failure to GET: " + e + "\"}";
-            }
+			using (var client = cloudantClient())
+			{
+				// create and populated DB if it doesn't exist
+				var response = await client.GetAsync(dbName);
+				if (!response.IsSuccessStatusCode)
+				{
+					var body = new StringContent("", Encoding.UTF8, "application/json");
+					response = await client.PutAsync(dbName, body);
+					if (response.IsSuccessStatusCode)
+					{
+						Task t1 = Create(JsonConvert.DeserializeObject<ToDoItem>("{ 'text': 'Sample 1' }"));
+						Task t2 = Create(JsonConvert.DeserializeObject<ToDoItem>("{ 'text': 'Sample 2' }"));
+						Task t3 = Create(JsonConvert.DeserializeObject<ToDoItem>("{ 'text': 'Sample 3' }"));
+						await Task.WhenAll(t1, t2, t3);
+					}
+					else
+					{
+						throw new Exception("Failed to create database " + dbName + ". Status Code: " + response.StatusCode + ". Reason: " + response.ReasonPhrase);
+					}
+				}
+				
+				response = await client.GetAsync(dbName + "/_all_docs?include_docs=true");
+				if (response.IsSuccessStatusCode)
+				{
+					return await response.Content.ReadAsStringAsync();
+				}
+				string msg = "Failure to GET. Status Code: " + response.StatusCode + ". Reason: " + response.ReasonPhrase;
+				Console.WriteLine(msg);
+				return JsonConvert.SerializeObject(new { msg = msg });
+			}
         }
 
-        // PUT: /api/db/
         [HttpPut]
         public async Task<string> update(ToDoItem item)
         {
-            try
-            {
-                var dbRef = new DbConnection();
-                var client = dbRef.GetClient();
-                //setup updated fields.
-                var data = "{\"text\":\"" + item.text + "\"}";
-
-                //Update
-                var response = await client.Documents.PutAsync(item.id, item.rev, data);
-                if (response.IsSuccess)
-                {
-                    return "{\"id\":\"" + response.Id + "\",\"rev\":\"" + response.Rev + "\",\"text\":\"" + item.text + "\"}";
-                }
-                else
-                {
-                    return "{\"msg\": \"Failure to PUT. Status Code: " + response.StatusCode + ". Reason: " + response.Reason + "\"}";
-                }
-
-            }
-            catch (Exception e)
-            {
-                return "{\"msg\": \"Failure to PUT." + e + "\"}";
-            }
+            using (var client = cloudantClient())
+			{
+				var response = await client.PutAsJsonAsync(dbName + "/" + item.id + "?rev=" + item.rev, item);
+				if (response.IsSuccessStatusCode)
+				{
+					var responseJson = await response.Content.ReadAsAsync<ToDoItem>();
+					return JsonConvert.SerializeObject(new { id = responseJson.id, rev = responseJson.rev });
+				}
+				string msg = "Failure to PUT. Status Code: " + response.StatusCode + ". Reason: " + response.ReasonPhrase;
+				Console.WriteLine(msg);
+				return JsonConvert.SerializeObject(new { msg = msg });
+			}
         }
 
-        // Delete: /api/db/
         [HttpDelete]
         public async Task<dynamic> delete(ToDoItem item)
         {
-            try
-            {
-                var dbRef = new DbConnection();
-                var client = dbRef.GetClient();
-
-                //Delete
-                var response = await client.Documents.DeleteAsync(item.id, item.rev);
-                if (response.IsSuccess)
-                {
-                    return "{\"id\":\"" + response.Id + "\",\"rev\":\"" + response.Rev + "\"}";
-                }
-                else
-                {
-                    return "{\"msg\": \"Failure to DELETE. Status Code: " + response.StatusCode + ". Reason: " + response.Reason + "\"}";
-                }
-
-            }
-            catch (Exception e)
-            {
-                return "{\"msg\": \"Failure to DELETE. " + e + "\"}";
-            }
+            using (var client = cloudantClient())
+			{
+				var response = await client.DeleteAsync(dbName + "/" + item.id + "?rev=" + item.rev);
+				if (response.IsSuccessStatusCode)
+				{
+					var responseJson = await response.Content.ReadAsAsync<ToDoItem>();
+					return JsonConvert.SerializeObject(new { id = responseJson.id, rev = responseJson.rev });
+				}
+				string msg = "Failure to DELETE. Status Code: " + response.StatusCode + ". Reason: " + response.ReasonPhrase;
+				Console.WriteLine(msg);
+				return JsonConvert.SerializeObject(new { msg = msg });
+			}
         }
+
+		private HttpClient cloudantClient()
+		{
+			var vcapServices = System.Environment.GetEnvironmentVariable("VCAP_SERVICES");
+			if (vcapServices == null)
+            {
+                throw new Exception("VCAP_SERVICES environment variable not set.");
+            }
+			else
+			{
+				dynamic json = JsonConvert.DeserializeObject(vcapServices);
+				if (json.cloudantNoSQLDB == null) {
+					throw new Exception("Did not find Cloudant credentials in VCAP_SERVICES environment variable.");
+				}
+				else
+				{
+					string host = json.cloudantNoSQLDB[0].credentials.host;
+					string username = json.cloudantNoSQLDB[0].credentials.username;
+					string password = json.cloudantNoSQLDB[0].credentials.password;
+
+					var auth = Convert.ToBase64String(Encoding.ASCII.GetBytes(username + ":" + password));
+
+					HttpClient client = HttpClientFactory.Create(new LoggingHandler());
+					client.BaseAddress = new Uri("https://" + host + "/");
+					client.DefaultRequestHeaders.Accept.Clear();
+					client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+					client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", auth);
+					return client;
+				}
+			}			
+		}
     }
+
+	class LoggingHandler : DelegatingHandler
+	{
+		protected override async Task<HttpResponseMessage> SendAsync(
+			HttpRequestMessage request, System.Threading.CancellationToken cancellationToken)
+		{
+			Console.WriteLine("{0}\t{1}", request.Method, request.RequestUri);
+			var response = await base.SendAsync(request, cancellationToken);
+			Console.WriteLine(response.StatusCode);
+			return response;
+		}
+	}
 }
