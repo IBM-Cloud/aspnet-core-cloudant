@@ -26,11 +26,8 @@ public class Startup
     public void Configure(IApplicationBuilder app, ILoggerFactory loggerFactory)
     {
         loggerFactory.AddConsole();
-
 		app.UseErrorPage();
-
-		app.UseStaticFiles();		
-
+		app.UseStaticFiles();
 		app.UseMvcWithDefaultRoute();        
     }
 
