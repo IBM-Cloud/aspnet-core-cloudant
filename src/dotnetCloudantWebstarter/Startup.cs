@@ -3,8 +3,8 @@ using Microsoft.AspNet.Hosting;
 using Microsoft.Framework.DependencyInjection;
 using Microsoft.Framework.Logging;
 using Microsoft.Framework.Configuration;
-using Microsoft.Framework.Runtime;
 using Newtonsoft.Json;
+using Microsoft.Dnx.Runtime;
 
 public class Startup
 {
@@ -25,9 +25,9 @@ public class Startup
                 string host = json.cloudantNoSQLDB[0].credentials.host;
                 string username = json.cloudantNoSQLDB[0].credentials.username;
                 string password = json.cloudantNoSQLDB[0].credentials.password;
-                Configuration.Set("cloudantNoSQLDB:0:credentials:username", username);
-                Configuration.Set("cloudantNoSQLDB:0:credentials:password", password);
-                Configuration.Set("cloudantNoSQLDB:0:credentials:host", host);
+                Configuration["cloudantNoSQLDB:0:credentials:username"] = username;
+                Configuration["cloudantNoSQLDB:0:credentials:password"] = password;
+                Configuration["cloudantNoSQLDB:0:credentials:host"] = host;
             }
         }
     }
@@ -38,7 +38,7 @@ public class Startup
 
         // works with VCAP_SERVICES JSON value added to config.json when running locally,
         // and works with actual VCAP_SERVICES env var based on configuration set above when running in CF
-        services.Configure<creds>(Configuration.GetConfigurationSection("cloudantNoSQLDB:0:credentials"));
+        services.Configure<creds>(Configuration.GetSection("cloudantNoSQLDB:0:credentials"));
     }
 
     public void Configure(IApplicationBuilder app, ILoggerFactory loggerFactory)
