@@ -12,8 +12,9 @@ public class Startup
 
     public Startup(IHostingEnvironment env, IApplicationEnvironment appEnv)
     {
-        var configBuilder = new ConfigurationBuilder(appEnv.ApplicationBasePath)
-            .AddJsonFile("config.json");
+        var configBuilder = new ConfigurationBuilder()
+            .SetBasePath(appEnv.ApplicationBasePath)
+            .AddJsonFile("config.json", optional: true);
         Configuration = configBuilder.Build();
 
         string vcapServices = System.Environment.GetEnvironmentVariable("VCAP_SERVICES");
@@ -44,7 +45,7 @@ public class Startup
     public void Configure(IApplicationBuilder app, ILoggerFactory loggerFactory)
     {
         loggerFactory.AddConsole();
-        app.UseErrorPage();
+        app.UseDeveloperExceptionPage();
         app.UseStaticFiles();
         app.UseMvcWithDefaultRoute();
     }

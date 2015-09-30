@@ -17,9 +17,9 @@ namespace CloudantDotNet.Controllers
 
         private creds cloudantCreds;
 
-        public DbController(IOptions<creds> optionsAccessor)
+        public DbController(IOptions<creds> options)
         {
-            cloudantCreds = optionsAccessor.Options;
+            cloudantCreds = options.Value;
         }
 
         [HttpPost]
@@ -48,8 +48,7 @@ namespace CloudantDotNet.Controllers
                 var response = await client.GetAsync(dbName);
                 if (!response.IsSuccessStatusCode)
                 {
-                    var body = new StringContent("", Encoding.UTF8, "application/json");
-                    response = await client.PutAsync(dbName, body);
+                    response = await client.PutAsync(dbName, null);
                     if (response.IsSuccessStatusCode)
                     {
                         Task t1 = Create(JsonConvert.DeserializeObject<ToDoItem>("{ 'text': 'Sample 1' }"));
