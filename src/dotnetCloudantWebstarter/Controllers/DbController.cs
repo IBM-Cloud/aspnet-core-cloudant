@@ -5,8 +5,8 @@ using System.Net.Http.Headers;
 using System.Text;
 using Microsoft.AspNet.Mvc;
 using Newtonsoft.Json;
+using Microsoft.Extensions.OptionsModel;
 using dotnetCloudantWebstarter.Models;
-using Microsoft.Framework.OptionsModel;
 
 namespace CloudantDotNet.Controllers
 {
