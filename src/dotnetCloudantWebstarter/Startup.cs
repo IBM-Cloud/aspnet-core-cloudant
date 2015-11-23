@@ -1,19 +1,17 @@
 ﻿using Microsoft.AspNet.Builder;
 using Microsoft.AspNet.Hosting;
-using Microsoft.Framework.DependencyInjection;
-using Microsoft.Framework.Logging;
-using Microsoft.Framework.Configuration;
 using Newtonsoft.Json;
-using Microsoft.Dnx.Runtime;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Configuration;
 
 public class Startup
 {
     public IConfiguration Configuration { get; set; }
 
-    public Startup(IHostingEnvironment env, IApplicationEnvironment appEnv)
+    public Startup(IHostingEnvironment env)
     {
         var configBuilder = new ConfigurationBuilder()
-            .SetBasePath(appEnv.ApplicationBasePath)
             .AddJsonFile("config.json", optional: true);
         Configuration = configBuilder.Build();
 
@@ -49,6 +47,8 @@ public class Startup
         app.UseStaticFiles();
         app.UseMvcWithDefaultRoute();
     }
+
+    public static void Main(string[] args) => WebApplication.Run(args);
 }
 
 public class creds
