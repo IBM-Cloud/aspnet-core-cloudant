@@ -9,5 +9,4 @@ applications:
   memory: 256M
   services:
   - sample-aspnet5-cloudant-cloudantNoSQLDB
-  buildpack: https://github.com/cloudfoundry-community/asp.net5-buildpack
   
