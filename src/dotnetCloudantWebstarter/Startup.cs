@@ -4,6 +4,7 @@ using Newtonsoft.Json;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Configuration;
+using Newtonsoft.Json.Linq;
 
 public class Startup
 {
@@ -19,14 +20,19 @@ public class Startup
         if (vcapServices != null)
         {
             dynamic json = JsonConvert.DeserializeObject(vcapServices);
-            if (json.cloudantNoSQLDB != null)
-            {
-                string host = json.cloudantNoSQLDB[0].credentials.host;
-                string username = json.cloudantNoSQLDB[0].credentials.username;
-                string password = json.cloudantNoSQLDB[0].credentials.password;
-                Configuration["cloudantNoSQLDB:0:credentials:username"] = username;
-                Configuration["cloudantNoSQLDB:0:credentials:password"] = password;
-                Configuration["cloudantNoSQLDB:0:credentials:host"] = host;
+            foreach (dynamic obj in json.Children()) {
+                if (((string)obj.Name).ToLowerInvariant().StartsWith("cloudant")) {
+                    dynamic credentials = (((JProperty)obj).Value[0] as dynamic).credentials;
+                    if (credentials != null) {
+                        string host = credentials.host;
+                        string username = credentials.username;
+                        string password = credentials.password;
+                        Configuration["cloudantNoSQLDB:0:credentials:username"] = username;
+                        Configuration["cloudantNoSQLDB:0:credentials:password"] = password;
+                        Configuration["cloudantNoSQLDB:0:credentials:host"] = host;
+                        break;
+                    }
+                }
             }
         }
     }
