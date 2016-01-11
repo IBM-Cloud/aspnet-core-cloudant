@@ -21,7 +21,7 @@ public class Startup
         {
             dynamic json = JsonConvert.DeserializeObject(vcapServices);
             foreach (dynamic obj in json.Children()) {
-                if (((string)obj.Name).ToLowerInvariant().StartsWith("cloudant")) {
+                if (((string)obj.Name).ToLowerInvariant().Contains("cloudant")) {
                     dynamic credentials = (((JProperty)obj).Value[0] as dynamic).credentials;
                     if (credentials != null) {
                         string host = credentials.host;
