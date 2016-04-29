@@ -3,9 +3,9 @@ using System.Threading.Tasks;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
-using Microsoft.AspNet.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
-using Microsoft.Extensions.OptionsModel;
+using Microsoft.Extensions.Options;
 using dotnetCloudantWebstarter.Models;
 
 namespace CloudantDotNet.Controllers
@@ -15,11 +15,11 @@ namespace CloudantDotNet.Controllers
     {
         private static readonly string dbName = "todos";
 
-        private creds cloudantCreds;
+        private Creds cloudantCreds;
 
-        public DbController(IOptions<creds> options)
+        public DbController(Creds creds)
         {
-            cloudantCreds = options.Value;
+            cloudantCreds = creds;
         }
 
         [HttpPost]
@@ -44,7 +44,7 @@ namespace CloudantDotNet.Controllers
         {
             using (var client = cloudantClient())
             {
-                // create and populated DB if it doesn't exist
+                // create and populate DB if it doesn't exist
                 var response = await client.GetAsync(dbName);
                 if (!response.IsSuccessStatusCode)
                 {
