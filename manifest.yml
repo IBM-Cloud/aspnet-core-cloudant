@@ -1,12 +1,12 @@
 ---
 declared-services: 
-  sample-aspnet5-cloudant-cloudantNoSQLDB: 
+  sample-aspnetcore-cloudant-cloudantNoSQLDB:
     label: cloudantNoSQLDB 
     plan: Shared 
 applications:
-- name: sample-aspnet5-cloudant
+- name: sample-aspnetcore-cloudant
   random-route: true
   memory: 256M
   services:
-  - sample-aspnet5-cloudant-cloudantNoSQLDB
+  - sample-aspnetcore-cloudant-cloudantNoSQLDB
   
