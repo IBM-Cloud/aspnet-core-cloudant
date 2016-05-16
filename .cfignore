@@ -1,6 +1,7 @@
 .vs/
 artifacts/
 bin/
+obj/
 *.sln
 *.xproj
 *.xproj.user

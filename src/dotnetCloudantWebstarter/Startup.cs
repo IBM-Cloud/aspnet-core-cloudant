@@ -1,10 +1,11 @@
-﻿using Microsoft.AspNet.Builder;
-using Microsoft.AspNet.Hosting;
+﻿using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
 using Newtonsoft.Json;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json.Linq;
+using System.IO;
 
 public class Startup
 {
@@ -43,7 +44,13 @@ public class Startup
 
         // works with VCAP_SERVICES JSON value added to config.json when running locally,
         // and works with actual VCAP_SERVICES env var based on configuration set above when running in CF
-        services.Configure<creds>(Configuration.GetSection("cloudantNoSQLDB:0:credentials"));
+        var creds = new dotnetCloudantWebstarter.Models.Creds()
+        {
+            username = Configuration["cloudantNoSQLDB:0:credentials:username"],
+            password = Configuration["cloudantNoSQLDB:0:credentials:password"],
+            host = Configuration["cloudantNoSQLDB:0:credentials:host"]
+        };
+        services.AddSingleton(typeof(dotnetCloudantWebstarter.Models.Creds), creds);
     }
 
     public void Configure(IApplicationBuilder app, ILoggerFactory loggerFactory)
@@ -54,12 +61,22 @@ public class Startup
         app.UseMvcWithDefaultRoute();
     }
 
-    public static void Main(string[] args) => WebApplication.Run(args);
-}
+    public static void Main(string[] args)
+    {
+        var config = new ConfigurationBuilder()
+            .AddCommandLine(args)
+            .Build();
 
-public class creds
-{
-    public string username { get; set; }
-    public string password { get; set; }
-    public string host { get; set; }
+        var currentDirectory = Directory.GetCurrentDirectory();
+
+        var host = new WebHostBuilder()
+                    .UseKestrel()
+                    .UseContentRoot(Path.Combine(currentDirectory, "src", "dotnetCloudantWebstarter"))
+                    .UseWebRoot(Path.Combine(currentDirectory, "src", "dotnetCloudantWebstarter", "wwwroot"))
+                    .UseConfiguration(config)
+                    .UseStartup<Startup>()
+                    .Build();
+
+        host.Run();
+    }
 }
