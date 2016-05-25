@@ -1,7 +1,7 @@
 {
     "buildOptions": {
         "copyToOutput": {
-            "include": [ "wwwroot" ]
+            "include": [ "wwwroot", "**.cshtml" ]
         },
         "debugType": "portable",
         "emitEntryPoint": true,

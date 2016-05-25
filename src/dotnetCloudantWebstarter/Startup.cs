@@ -5,7 +5,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json.Linq;
-using System.IO;
 
 public class Startup
 {
@@ -67,12 +66,8 @@ public class Startup
             .AddCommandLine(args)
             .Build();
 
-        var currentDirectory = Directory.GetCurrentDirectory();
-
         var host = new WebHostBuilder()
                     .UseKestrel()
-                    .UseContentRoot(Path.Combine(currentDirectory, "src", "dotnetCloudantWebstarter"))
-                    .UseWebRoot(Path.Combine(currentDirectory, "src", "dotnetCloudantWebstarter", "wwwroot"))
                     .UseConfiguration(config)
                     .UseStartup<Startup>()
                     .Build();
