@@ -74,19 +74,7 @@ header,footer {
 	margin: 0 auto;
 }
 
-/* foreground color */
-.title,.tips {
-	
-}
-
-td {
-	
-}
 /* background color */
-table {
-	
-}
-
 .leftHalf {
 	float: left;
 	background-color: #26343f;
@@ -162,7 +150,7 @@ button {
 	top: 0px;
 	background: none;
 	border: none;
-	cursor: pointer;s
+	cursor: pointer;
 }
 
 .addBtn {
@@ -173,11 +161,6 @@ button {
 	border: none;
 	cursor: pointer;
 }
-
-.detailBtn img,.addBtn img {
-	
-}
-
 
 /* dynamic effect */
 .records tr:hover .deleteBtn {
