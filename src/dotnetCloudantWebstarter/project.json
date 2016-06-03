@@ -1,8 +1,8 @@
 {
     "buildOptions": {
         "copyToOutput": {
-            "include": [ "wwwroot", "**.cshtml" ],
-            "exclude": [ "bin" ]
+            "include": [ "wwwroot", "**.cshtml", "config.json" ],
+            "exclude": [ "bin", "obj" ]
         },
         "debugType": "portable",
         "emitEntryPoint": true,
@@ -38,7 +38,7 @@
 
     "publishOptions": {
         "include": [ "wwwroot", "**.cshtml" ],
-        "exclude": [ "**.user", "**.vspscc", "bin" ]
+        "exclude": [ "**.user", "**.vspscc", "bin", "obj" ]
     },
 
     "scripts": { },
