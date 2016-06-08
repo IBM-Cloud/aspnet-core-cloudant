@@ -1,4 +1,4 @@
-# ASP .NET Core Cloudant Sample
+# ASP.NET Core Cloudant Sample
 
 This application demonstrates how to use the Bluemix Cloudant NoSQL DB Service in an ASP.NET Core application.
 
