@@ -1,5 +1,4 @@
-﻿
-namespace dotnetCloudantWebstarter.Models
+﻿namespace CloudantDotNet.Models
 {
     public class ToDoItem
     {

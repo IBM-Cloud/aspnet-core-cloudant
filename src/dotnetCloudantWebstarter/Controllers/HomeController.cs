@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace CloudantDotNetBoilerplate.Controllers
+namespace CloudantDotNet.Controllers
 {
     public class HomeController : Controller
     {
