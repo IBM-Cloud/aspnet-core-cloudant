@@ -10,18 +10,18 @@
     },
 
     "dependencies": {
-        "Microsoft.AspNetCore.Server.Kestrel": "1.0.0",
+        "Microsoft.AspNetCore.Server.Kestrel": "1.0.1",
         "Microsoft.AspNetCore.Diagnostics": "1.0.0",
         "Microsoft.Extensions.Configuration.CommandLine": "1.0.0",
         "Microsoft.Extensions.Configuration.Json": "1.0.0",
-        "Microsoft.AspNetCore.Mvc": "1.0.0",
+        "Microsoft.AspNetCore.Mvc": "1.0.1",
         "Microsoft.AspNetCore.StaticFiles": "1.0.0",
         "Microsoft.Extensions.Logging.Console": "1.0.0",
         "Microsoft.AspNet.WebApi.Client": "5.2.3",
         "Newtonsoft.Json": "9.0.1",
         "Microsoft.NETCore.App": {
             "type": "platform",
-            "version": "1.0.0",
+            "version": "1.0.1",
             "include": "all"
         },
         "System.Runtime.Serialization.Xml": "4.1.1"
@@ -44,5 +44,5 @@
 
     "scripts": { },
 
-    "version": "1.0.0"
+    "version": "1.0.1"
 }
