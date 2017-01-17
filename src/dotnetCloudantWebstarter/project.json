@@ -1,7 +1,7 @@
 {
     "buildOptions": {
         "copyToOutput": {
-            "include": [ "wwwroot", "**.cshtml", "config.json" ],
+            "include": [ "wwwroot", "**.cshtml", "vcap-local.json" ],
             "exclude": [ "bin", "obj" ]
         },
         "debugType": "portable",

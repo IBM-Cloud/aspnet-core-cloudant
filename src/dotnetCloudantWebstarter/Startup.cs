@@ -15,7 +15,7 @@ public class Startup
     public Startup(IHostingEnvironment env)
     {
         var configBuilder = new ConfigurationBuilder()
-            .AddJsonFile("config.json", optional: true);
+            .AddJsonFile("vcap-local.json", optional: true);
         Configuration = configBuilder.Build();
 
         string vcapServices = System.Environment.GetEnvironmentVariable("VCAP_SERVICES");
@@ -43,7 +43,7 @@ public class Startup
     {
         services.AddMvc();
 
-        // works with VCAP_SERVICES JSON value added to config.json when running locally,
+        // works with VCAP_SERVICES JSON value added to vcap-local.json when running locally,
         // and works with actual VCAP_SERVICES env var based on configuration set above when running in CF
         var creds = new CloudantDotNet.Models.Creds()
         {
