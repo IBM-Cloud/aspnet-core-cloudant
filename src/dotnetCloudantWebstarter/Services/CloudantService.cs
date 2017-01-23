@@ -4,6 +4,7 @@ using System;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
+using System.Text.Encodings.Web;
 using System.Threading.Tasks;
 
 namespace CloudantDotNet.Services
@@ -12,10 +13,12 @@ namespace CloudantDotNet.Services
     {
         private static readonly string _dbName = "todos";
         private readonly Creds _cloudantCreds;
+        private readonly UrlEncoder _urlEncoder;
 
-        public CloudantService(Creds creds)
+        public CloudantService(Creds creds, UrlEncoder urlEncoder)
         {
             _cloudantCreds = creds;
+            _urlEncoder = urlEncoder;
         }
 
         public async Task<dynamic> CreateAsync(ToDoItem item)
@@ -38,7 +41,7 @@ namespace CloudantDotNet.Services
         {
             using (var client = CloudantClient())
             {
-                var response = await client.DeleteAsync(_dbName + "/" + item.id + "?rev=" + item.rev);
+                var response = await client.DeleteAsync(_dbName + "/" + _urlEncoder.Encode(item.id) + "?rev=" + _urlEncoder.Encode(item.rev));
                 if (response.IsSuccessStatusCode)
                 {
                     var responseJson = await response.Content.ReadAsAsync<ToDoItem>();
@@ -69,7 +72,7 @@ namespace CloudantDotNet.Services
         {
             using (var client = CloudantClient())
             {
-                var response = await client.PutAsJsonAsync(_dbName + "/" + item.id + "?rev=" + item.rev, item);
+                var response = await client.PutAsJsonAsync(_dbName + "/" + _urlEncoder.Encode(item.id) + "?rev=" + _urlEncoder.Encode(item.rev), item);
                 if (response.IsSuccessStatusCode)
                 {
                     var responseJson = await response.Content.ReadAsAsync<ToDoItem>();

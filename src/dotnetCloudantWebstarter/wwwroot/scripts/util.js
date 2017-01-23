@@ -1,6 +1,6 @@
 //utilities
 function createXHR(){
-	if(typeof XMLHttpRequest != 'undefined'){
+	if(typeof XMLHttpRequest !== 'undefined'){
 		return new XMLHttpRequest();
 	}else{
 		try{
@@ -8,19 +8,18 @@ function createXHR(){
 		}catch(e){
 			try{
 				return new ActiveXObject('Microsoft.XMLHTTP');
-			}catch(e){}
+			}catch(e){ return null; }
 		}
 	}
-	return null;
 }
 function xhrGet(url, callback, errback){
 	var xhr = new createXHR();
 	xhr.open("GET", url, true);
 	xhr.onreadystatechange = function(){
-		if(xhr.readyState == 4){
-			if(xhr.status == 200){
+		if(xhr.readyState === 4){
+			if (xhr.status === 200) {
 				callback(parseJson(xhr.responseText));
-			}else{
+			} else {
 				errback('service not available');
 			}
 		}
@@ -33,8 +32,8 @@ function xhrPut(url, data, callback, errback){
 	xhr.open("PUT", url, true);
 	xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 	xhr.onreadystatechange = function(){
-		if(xhr.readyState == 4){
-			if(xhr.status == 200){
+		if(xhr.readyState === 4){
+			if(xhr.status === 200){
 				callback();
 			}else{
 				errback('service not available');
@@ -50,8 +49,8 @@ function xhrPost(url, data, callback, errback){
 	xhr.open("POST", url, true);
 	xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 	xhr.onreadystatechange = function(){
-		if(xhr.readyState == 4){
-			if(xhr.status == 200){
+		if(xhr.readyState === 4){
+			if(xhr.status === 200){
 				callback(parseJson(xhr.responseText));
 			}else{
 				errback('service not available');
@@ -66,8 +65,8 @@ function xhrDelete(url, callback, errback){
 	var xhr = new createXHR();
 	xhr.open("DELETE", url, true);
 	xhr.onreadystatechange = function(){
-		if(xhr.readyState == 4){
-			if(xhr.status == 200){
+		if(xhr.readyState === 4){
+			if(xhr.status === 200){
 				callback();
 			}else{
 				errback('service not available');
@@ -79,8 +78,8 @@ function xhrDelete(url, callback, errback){
 	xhr.send();
 }
 
-function parseJson(str){
-	return window.JSON ? JSON.parse(str) : eval('(' + str + ')');
+function parseJson(str) {
+    return JSON.parse(str);
 }
 
 function objectToQuery(map){
@@ -88,7 +87,7 @@ function objectToQuery(map){
 	for(var name in map){
 		var value = map[name];
 		var assign = enc(name) + "=";
-		if(value && (value instanceof Array || typeof value == 'array')){
+		if(value && value instanceof Array){
 			for(var i = 0, len = value.length; i < len; ++i){
 				pairs.push(assign + enc(value[i]));
 			}
