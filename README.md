@@ -2,7 +2,7 @@
 
 This application demonstrates how to use the Bluemix Cloudant NoSQL DB Service in an ASP.NET Core application.
 
-[![Deploy to Bluemix](https://bluemix.net/deploy/button.png)](https://bluemix.net/deploy)
+[![Deploy to Bluemix](https://bluemix.net/deploy/button.png)](https://bluemix.net/deploy?repository=https://github.com/IBM-Bluemix/aspnet-core-cloudant)
 
 ## Run the app locally
 
