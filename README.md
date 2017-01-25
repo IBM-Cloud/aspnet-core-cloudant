@@ -11,6 +11,6 @@ This application demonstrates how to use the Bluemix Cloudant NoSQL DB Service i
 + Copy the value for the VCAP_SERVICES envirionment variable from the application running in Bluemix and paste it in the config.json file
 + Run `dotnet restore`
 + Run `dotnet run`
-+ Access the running app in a browser at [http://localhost:5000]()
++ Access the running app in a browser at <http://localhost:5000>
 
 [Getting Started]: http://docs.asp.net/en/latest/getting-started/index.html
