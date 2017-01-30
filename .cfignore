@@ -9,3 +9,4 @@ obj/
 README.md
 project.lock.json
 Properties/
+vcap-local.json

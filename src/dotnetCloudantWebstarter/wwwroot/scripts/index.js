@@ -56,7 +56,7 @@ function deleteItem(deleteBtnNode) {
 }
 
 function onKey(evt) {
-    if (evt.keyCode == KEY_ENTER && !evt.shiftKey) {
+    if (evt.keyCode === KEY_ENTER && !evt.shiftKey) {
         evt.stopPropagation();
         evt.preventDefault();
         var row = evt.target.parentNode.parentNode;
@@ -72,7 +72,7 @@ function saveChange(contentNode, callback) {
     var row = contentNode.parentNode.parentNode;
     var id = row.getAttribute('data-id');
     var rev = row.getAttribute('data-rev');
-    id = id == null ? "" : id;
+    id = id === null ? "" : id;
     var data = {
         id: id,
         rev: rev,
@@ -98,10 +98,4 @@ function saveChange(contentNode, callback) {
     }
 }
 
-function toggleServiceInfo() {
-    var node = document.getElementById('dbserviceinfo');
-    node.style.display = node.style.display == 'none' ? '' : 'none';
-}
-
 loadItems();
-
