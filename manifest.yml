@@ -9,4 +9,5 @@ applications:
   memory: 512M
   services:
   - sample-aspnetcore-cloudant-cloudantNoSQLDB
-  
+  env:
+    DOTNET_CLI_TELEMETRY_OPTOUT: 1

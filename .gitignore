@@ -2,6 +2,6 @@
 artifacts/
 bin/
 obj/
-*.xproj.user
+*.csproj.user
 project.lock.json
 vcap-local.json

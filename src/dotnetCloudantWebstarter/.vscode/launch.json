@@ -6,26 +6,29 @@
             "type": "coreclr",
             "request": "launch",
             "preLaunchTask": "build",
-            "program": "${workspaceRoot}/bin/Debug/netcoreapp1.0/dotnetCloudantWebstarter.dll",
+            "program": "${workspaceRoot}/bin/Debug/netcoreapp1.0/DotnetCloudantWebstarter.dll",
             "args": [],
             "cwd": "${workspaceRoot}",
-            "stopAtEntry": false
+            "stopAtEntry": false,
+            "sourceFileMap": {
+                "/Views": "${workspaceRoot}/Views"
+            }
         },
         {
             "name": ".NET Core Launch (web)",
             "type": "coreclr",
             "request": "launch",
             "preLaunchTask": "build",
-            "program": "${workspaceRoot}/bin/Debug/netcoreapp1.0/dotnetCloudantWebstarter.dll",
+            "program": "${workspaceRoot}/bin/Debug/netcoreapp1.0/DotnetCloudantWebstarter.dll",
             "args": [],
             "cwd": "${workspaceRoot}",
             "stopAtEntry": false,
             "launchBrowser": {
                 "enabled": true,
-                "args": "${auto-detect-url}",
+                "args": "http://localhost:5000",
                 "windows": {
                     "command": "cmd.exe",
-                    "args": "/C start ${auto-detect-url}"
+                    "args": "/C start http://localhost:5000"
                 },
                 "osx": {
                     "command": "open"
@@ -33,6 +36,9 @@
                 "linux": {
                     "command": "xdg-open"
                 }
+            },
+            "sourceFileMap": {
+                "/Views": "${workspaceRoot}/Views"
             }
         }
     ]
