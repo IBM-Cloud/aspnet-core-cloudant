@@ -6,6 +6,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json.Linq;
 using CloudantDotNet.Services;
+using System.IO;
 
 namespace CloudantDotNet
 {
@@ -16,6 +17,7 @@ namespace CloudantDotNet
         public Startup(IHostingEnvironment env)
         {
             var configBuilder = new ConfigurationBuilder()
+                .SetBasePath(env.ContentRootPath)
                 .AddJsonFile("vcap-local.json", optional: true);
             Configuration = configBuilder.Build();
 
@@ -79,6 +81,8 @@ namespace CloudantDotNet
 
             var host = new WebHostBuilder()
                         .UseKestrel()
+                        .UseContentRoot(Directory.GetCurrentDirectory())
+                        .UseIISIntegration()
                         .UseConfiguration(config)
                         .UseStartup<Startup>()
                         .Build();
