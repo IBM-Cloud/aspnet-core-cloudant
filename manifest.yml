@@ -11,3 +11,4 @@ applications:
   - sample-aspnetcore-cloudant-cloudantNoSQLDB
   env:
     DOTNET_CLI_TELEMETRY_OPTOUT: 1
+    DOTNET_SKIP_FIRST_TIME_EXPERIENCE: true
