@@ -6,9 +6,9 @@
             "type": "coreclr",
             "request": "launch",
             "preLaunchTask": "build",
-            "program": "${workspaceRoot}/src/DotnetCloudantWebstarter/bin/Debug/netcoreapp1.0/DotnetCloudantWebstarter.dll",
+            "program": "${workspaceRoot}/src/CloudantDotNet/bin/Debug/netcoreapp1.0/CloudantDotNet.dll",
             "args": [],
-            "cwd": "${workspaceRoot}/src/DotnetCloudantWebstarter/bin/Debug/netcoreapp1.0/",
+            "cwd": "${workspaceRoot}/src/CloudantDotNet/bin/Debug/netcoreapp1.0/",
             "stopAtEntry": false,
             "sourceFileMap": {
                 "/Views": "${workspaceRoot}/src/DotnetCloudantWebstarter/Views"
@@ -19,9 +19,9 @@
             "type": "coreclr",
             "request": "launch",
             "preLaunchTask": "build",
-            "program": "${workspaceRoot}/src/DotnetCloudantWebstarter/bin/Debug/netcoreapp1.0/DotnetCloudantWebstarter.dll",
+            "program": "${workspaceRoot}/src/CloudantDotNet/bin/Debug/netcoreapp1.0/CloudantDotNet.dll",
             "args": [],
-            "cwd": "${workspaceRoot}/src/DotnetCloudantWebstarter/bin/Debug/netcoreapp1.0/",
+            "cwd": "${workspaceRoot}/src/CloudantDotNet/bin/Debug/netcoreapp1.0/",
             "stopAtEntry": false,
             "launchBrowser": {
                 "enabled": true,
@@ -38,7 +38,7 @@
                 }
             },
             "sourceFileMap": {
-                "/Views": "${workspaceRoot}/src/DotnetCloudantWebstarter/Views"
+                "/Views": "${workspaceRoot}/src/CloudantDotNet/Views"
             }
         }
     ]
