@@ -6,7 +6,7 @@
     "tasks": [
         {
             "taskName": "build",
-            "args": [ "src/DotnetCloudantWebstarter/DotnetCloudantWebstarter.csproj", "--no-incremental" ],
+            "args": [ "src/CloudantDotNet/CloudantDotNet.csproj", "--no-incremental" ],
             "isBuildCommand": true,
             "showOutput": "always",
             "problemMatcher": "$msCompile"

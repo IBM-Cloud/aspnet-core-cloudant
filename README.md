@@ -8,7 +8,7 @@ This application demonstrates how to use the Bluemix Cloudant NoSQL DB Service i
 
 1. Install ASP.NET Core and the Dotnet CLI by following the [Getting Started][] instructions
 + Clone this app
-+ cd into the app directory and then `src/dotnetCloudantWebstarter`
++ cd into the app directory and then `src/CloudantDotNet`
 + Copy the value for the VCAP_SERVICES envirionment variable from the application running in Bluemix and paste it in the vcap-local.json file
 + Run `dotnet restore`
 + Run `dotnet run`

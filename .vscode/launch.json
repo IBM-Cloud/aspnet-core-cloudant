@@ -11,7 +11,7 @@
             "cwd": "${workspaceRoot}/src/CloudantDotNet/bin/Debug/netcoreapp1.0/",
             "stopAtEntry": false,
             "sourceFileMap": {
-                "/Views": "${workspaceRoot}/src/DotnetCloudantWebstarter/Views"
+                "/Views": "${workspaceRoot}/src/CloudantDotNet/Views"
             }
         },
         {
