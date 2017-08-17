@@ -5,7 +5,7 @@
     <TargetFramework>netcoreapp1.0</TargetFramework>
     <DebugType>portable</DebugType>
     <PreserveCompilationContext>true</PreserveCompilationContext>
-    <AssemblyName>DotnetCloudantWebstarter</AssemblyName>
+    <AssemblyName>CloudantDotNet</AssemblyName>
     <OutputType>Exe</OutputType>
     <PackageTargetFallback>$(PackageTargetFallback);portable-net452+win81;portable-net461+netcore45+wp81+wpa81+dnxcore50;</PackageTargetFallback>
   </PropertyGroup>

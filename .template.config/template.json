@@ -1,0 +1,12 @@
+{
+    "author": "IBM",
+    "classifications": [ "Web" ],
+    "name": "Bluemix Cloudant Web Starter",
+    "identity": "Bluemix.CloudantWebstarter",
+    "shortName": "bluemixcloudantmvc",
+    "tags": {
+        "language": "C#"
+    },
+    "sourceName": "CloudantDotNet",
+    "preferNameDirectory" : "true"
+}

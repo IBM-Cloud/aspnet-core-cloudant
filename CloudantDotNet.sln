@@ -12,7 +12,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		README.md = README.md
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotnetCloudantWebstarter", "src\DotnetCloudantWebstarter\DotnetCloudantWebstarter.csproj", "{2FA5003E-9535-4D69-893F-306D56D3DC2B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CloudantDotNet", "src\CloudantDotNet\CloudantDotNet.csproj", "{2FA5003E-9535-4D69-893F-306D56D3DC2B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
