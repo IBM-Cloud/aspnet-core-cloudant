@@ -1,19 +1,17 @@
-﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
-    <VersionPrefix>1.0.5</VersionPrefix>
-    <TargetFramework>netcoreapp1.0</TargetFramework>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
     <DebugType>portable</DebugType>
     <PreserveCompilationContext>true</PreserveCompilationContext>
     <AssemblyName>DotnetCloudantWebstarter</AssemblyName>
     <OutputType>Exe</OutputType>
-    <PackageTargetFallback>$(PackageTargetFallback);portable-net452+win81;portable-net461+netcore45+wp81+wpa81+dnxcore50;</PackageTargetFallback>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore" Version="1.0.*" />
-    <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="1.0.*" />
-    <PackageReference Include="Microsoft.AspNetCore.StaticFiles" Version="1.0.*" />
+    <PackageReference Include="Microsoft.AspNetCore"  />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc" />
+    <PackageReference Include="Microsoft.AspNetCore.StaticFiles" />
     <PackageReference Include="Microsoft.AspNet.WebApi.Client" Version="5.2.3" />
     <PackageReference Include="System.Runtime.Serialization.Xml" Version="4.1.*" />
   </ItemGroup>
